@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevOps Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>DevOps Task Manager</h1>
+      <p class="subtitle">Simple app for practicing Docker, CI/CD, Kubernetes & reverse proxy</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Create Task</h2>
+        <form id="task-form">
+          <div class="form-row">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" required />
+          </div>
+          <div class="form-row">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              <option value="todo">To Do</option>
+              <option value="in-progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="dueDate">Due date</label>
+            <input type="date" id="dueDate" name="dueDate" />
+          </div>
+          <button type="submit" class="btn-primary">Add Task</button>
+          <p id="form-message" class="message"></p>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2>Tasks</h2>
+          <button id="refresh-btn" class="btn-secondary">Refresh</button>
+        </div>
+        <div id="tasks-list" class="tasks-list"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>API base URL: <code id="api-base-url"></code></p>
+      <p class="hint">
+        Try hitting <code>/healthz</code> and <code>/api/tasks</code> directly (perfect for smoke tests in CI/CD or Kubernetes readiness checks).
+      </p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+  </html>
+
+

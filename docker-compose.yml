@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: task-manager-db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-config:/data/configdb
+    networks:
+      - mongo-network
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-manager-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - mongo-network
+    depends_on:
+      mongo:
+        condition: service_healthy    
+
+volumes:
+  mongodb-data:
+  mongodb-config:
+
+networks:
+  mongo-network:
+    name: mongo-network
+    driver: bridge
