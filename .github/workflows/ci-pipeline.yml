@@ -44,8 +44,8 @@ jobs:
           username: ${{secrets.EC2_USER}}
           key: ${{secrets.EC2_SSH_KEY}}
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:latest
-            docker stop nodejs-task-manager_app || true
-            docker rm nodejs-task-manager_app || true
-            docker run -d -p 3000:3000 --name nodejs-task-manager_app ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:latest    
-
+              cd /home/ubuntu/apps/nodejs-task-manager
+              echo "Pull latest images"
+              docker compose pull
+              echo "Restart containers"
+              docker compose up -d --remove-orphans
