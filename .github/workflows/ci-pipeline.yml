@@ -45,6 +45,7 @@ jobs:
           key: ${{secrets.EC2_SSH_KEY}}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:latest
-            docker stop task-manager || true
-            docker rm task-manager || true
-            docker run -d -p 3000:3000 --name task-manager ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:latest    
+            docker stop nodejs-task-manager_app || true
+            docker rm nodejs-task-manager_app || true
+            docker run -d -p 3000:3000 --name nodejs-task-manager_app ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:latest    
+
