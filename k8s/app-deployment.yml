@@ -23,9 +23,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: app-secret
-                  key: MONGO_URI   
-
-
+                  key: MONGO_URI  
 ---
 
 apiVersion: v1
