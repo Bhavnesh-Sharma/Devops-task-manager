@@ -45,9 +45,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y trivy
 
-    - name: Run Trivy FS Scan
-      run: |
-        trivy fs --severity CRITICAL,HIGH --ignore-unfixed .
+      - name: Run Trivy FS Scan
+        run: |
+          trivy fs --severity CRITICAL,HIGH --ignore-unfixed .
 
 
   sonarqube_scan:
