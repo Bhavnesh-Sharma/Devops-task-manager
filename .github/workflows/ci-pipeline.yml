@@ -35,17 +35,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+    
       - name: Run Trivy FS Scan
         uses: aquasecurity/trivy-action@0.28.0
-        with:
+        with: 
           scan-type: fs
           scan-ref: .
           format: table
           ignore-unfixed: true
           vuln-type: os,library
           severity: CRITICAL,HIGH
-
 
   sonarqube_scan:
     runs-on: ubuntu-latest
