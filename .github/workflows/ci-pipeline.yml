@@ -58,6 +58,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
+      - name: Clear Sonar cache
+        run: rm -rf ~/.sonar
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
