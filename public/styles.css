@@ -162,13 +162,15 @@ textarea {
   margin-top: 0.4rem;
 }
 
-/* FIXED: Line 155 - Improved contrast for error messages */
+/* Fixed: High contrast error messages */
 .message.error {
-  color: #fca5a5;  /* Brighter red for better contrast on dark background */
+  color: #f87171;
+  font-weight: 500;
 }
 
 .message.success {
-  color: #86efac;  /* Brighter green for better contrast */
+  color: #86efac;
+  font-weight: 500;
 }
 
 .tasks-list {
@@ -206,16 +208,16 @@ textarea {
   font-weight: 600;
 }
 
-/* FIXED: Line 230 - Improved contrast for task description */
+/* Fixed: Maximum contrast for task description */
 .task-description {
   font-size: 0.85rem;
-  color: #d1d5db;  /* Lighter gray for better contrast (was #9ca3af) */
+  color: #e5e7eb;
 }
 
-/* FIXED: Line 235 - Improved contrast for task meta */
+/* Fixed: Maximum contrast for task meta */
 .task-meta {
   font-size: 0.8rem;
-  color: #d1d5db;  /* Lighter gray for better contrast (was #9ca3af) */
+  color: #e5e7eb;
 }
 
 .status-pill {
@@ -226,22 +228,26 @@ textarea {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  font-weight: 500;
 }
 
-/* FIXED: Line 240 - Improved contrast for status pills */
+/* Fixed: Maximum contrast for status pills */
 .status-todo {
-  background: rgba(59, 130, 246, 0.25);  /* Slightly increased opacity */
-  color: #93c5fd;  /* Brighter blue for better contrast (was #bfdbfe) */
+  background: rgba(59, 130, 246, 0.35);
+  color: #ffffff;
+  border: 1px solid rgba(59, 130, 246, 0.5);
 }
 
 .status-in-progress {
-  background: rgba(234, 179, 8, 0.3);  /* Slightly increased opacity */
-  color: #fde68a;  /* Brighter yellow for better contrast (was #fef3c7) */
+  background: rgba(234, 179, 8, 0.4);
+  color: #ffffff;
+  border: 1px solid rgba(234, 179, 8, 0.5);
 }
 
 .status-done {
-  background: rgba(34, 197, 94, 0.25);  /* Slightly increased opacity */
-  color: #86efac;  /* Brighter green for better contrast (was #bbf7d0) */
+  background: rgba(34, 197, 94, 0.35);
+  color: #ffffff;
+  border: 1px solid rgba(34, 197, 94, 0.5);
 }
 
 .task-actions {
@@ -252,7 +258,7 @@ textarea {
 
 .empty-state {
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: #d1d5db;
   text-align: center;
   padding: 0.75rem 0.4rem;
 }
@@ -261,7 +267,7 @@ textarea {
   border-top: 1px solid rgba(148, 163, 184, 0.3);
   padding: 0.9rem 1rem 1.1rem;
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #d1d5db;
   text-align: center;
   background: #020617;
 }
@@ -271,8 +277,10 @@ textarea {
   padding: 0.15rem 0.35rem;
   border-radius: 0.3rem;
   border: 1px solid rgba(55, 65, 81, 0.9);
+  color: #e5e7eb;
 }
 
 .hint {
   margin-top: 0.25rem;
+  color: #d1d5db;
 }
