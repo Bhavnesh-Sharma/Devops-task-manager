@@ -162,12 +162,13 @@ textarea {
   margin-top: 0.4rem;
 }
 
+/* FIXED: Line 155 - Improved contrast for error messages */
 .message.error {
-  color: #fecaca;
+  color: #fca5a5;  /* Brighter red for better contrast on dark background */
 }
 
 .message.success {
-  color: #bbf7d0;
+  color: #86efac;  /* Brighter green for better contrast */
 }
 
 .tasks-list {
@@ -205,14 +206,16 @@ textarea {
   font-weight: 600;
 }
 
+/* FIXED: Line 230 - Improved contrast for task description */
 .task-description {
   font-size: 0.85rem;
-  color: #9ca3af;
+  color: #d1d5db;  /* Lighter gray for better contrast (was #9ca3af) */
 }
 
+/* FIXED: Line 235 - Improved contrast for task meta */
 .task-meta {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #d1d5db;  /* Lighter gray for better contrast (was #9ca3af) */
 }
 
 .status-pill {
@@ -225,19 +228,20 @@ textarea {
   letter-spacing: 0.04em;
 }
 
+/* FIXED: Line 240 - Improved contrast for status pills */
 .status-todo {
-  background: rgba(59, 130, 246, 0.15);
-  color: #bfdbfe;
+  background: rgba(59, 130, 246, 0.25);  /* Slightly increased opacity */
+  color: #93c5fd;  /* Brighter blue for better contrast (was #bfdbfe) */
 }
 
 .status-in-progress {
-  background: rgba(234, 179, 8, 0.2);
-  color: #fef3c7;
+  background: rgba(234, 179, 8, 0.3);  /* Slightly increased opacity */
+  color: #fde68a;  /* Brighter yellow for better contrast (was #fef3c7) */
 }
 
 .status-done {
-  background: rgba(34, 197, 94, 0.15);
-  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.25);  /* Slightly increased opacity */
+  color: #86efac;  /* Brighter green for better contrast (was #bbf7d0) */
 }
 
 .task-actions {
@@ -272,5 +276,3 @@ textarea {
 .hint {
   margin-top: 0.25rem;
 }
-
-

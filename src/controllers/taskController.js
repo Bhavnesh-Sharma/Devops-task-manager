@@ -13,7 +13,8 @@ export async function createTask (req, res, next) {
   try {
     const { title, description, status, dueDate } = req.body
 
-    if (!title || !title.trim()) {
+    // FIXED: Using optional chaining and nullish coalescing for cleaner check
+    if (!title?.trim()) {
       return res.status(400).json({ message: 'Title is required' })
     }
 
@@ -50,9 +51,17 @@ export async function updateTask (req, res, next) {
     const { id } = req.params
     const { title, description, status, dueDate } = req.body
 
+    // Optional: You could also add optional chaining here for title validation in update
+    // But it's not required since title might be optional in updates
+    const updateData = {};
+    if (title !== undefined) updateData.title = title?.trim();
+    if (description !== undefined) updateData.description = description;
+    if (status !== undefined) updateData.status = status;
+    if (dueDate !== undefined) updateData.dueDate = dueDate;
+
     const task = await Task.findByIdAndUpdate(
       id,
-      { title, description, status, dueDate },
+      updateData,
       { new: true, runValidators: true }
     )
 
@@ -80,5 +89,3 @@ export async function deleteTask (req, res, next) {
     next(err)
   }
 }
-
-

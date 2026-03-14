@@ -194,6 +194,4 @@ tasksListEl.addEventListener('click', async (e) => {
   }
 })
 
-fetchTasks()
-
-
+await fetchTasks()
