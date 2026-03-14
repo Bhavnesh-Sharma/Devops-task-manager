@@ -13,18 +13,27 @@ spec:
       labels:
         app: mongo
     spec:
+      automountServiceAccountToken: false  # Fix #1
       containers:
         - name: mongo
           image: mongo:8.0
           ports:
-            - containerPort: 27017   
+            - containerPort: 27017
+          resources:  # Fix #2
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+              ephemeral-storage: "2Gi"
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom: 
                 secretKeyRef:
                   name: mongo-secret
                   key: MONGO_INITDB_ROOT_USERNAME    
-
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -36,7 +45,7 @@ spec:
       volumes:
         - name: mongo-storage
           persistentVolumeClaim:
-           claimName: mongo-pvc      
+            claimName: mongo-pvc      
 
 ---
 apiVersion: v1
@@ -52,4 +61,3 @@ spec:
       port: 27017
       targetPort: 27017
   type: ClusterIP
-
