@@ -3,7 +3,7 @@ name: DevSecOps CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - dev
 
 env:
   IMAGE_NAME: nodejs-task-manager
