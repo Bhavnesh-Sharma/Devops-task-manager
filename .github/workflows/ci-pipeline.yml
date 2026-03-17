@@ -123,6 +123,17 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG} .
 
+      - name: Save Docker image
+        run: |
+          docker save ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG} -o /tmp/image.tar
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp/image.tar
+          retention-days: 1
+
 
 # -------------------------------
 # Scan Docker Image
@@ -130,10 +141,18 @@ jobs:
 
   image_scan:
     runs-on: ubuntu-latest
-    needs: build_image  
+    needs: build_image
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: |
+          docker load -i /tmp/image.tar
 
       - name: Install Trivy
         run: |
@@ -145,9 +164,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install trivy
 
-      - name: Run Trivy Scan
+      - name: Run Trivy Scan on image
         run: |
-          trivy fs --severity HIGH,CRITICAL --exit-code 1 .
+          trivy image --severity HIGH,CRITICAL --exit-code 1 ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG}
 
 
 # -------------------------------
@@ -159,6 +178,16 @@ jobs:
     needs: image_scan
 
     steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: |
+          docker load -i /tmp/image.tar
+
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -167,7 +196,7 @@ jobs:
 
       - name: Push image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:${IMAGE_TAG}
+          docker push ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG}
 
 
 # -------------------------------
@@ -187,12 +216,12 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:${IMAGE_TAG}
+            docker pull ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG}
 
-            docker stop nodejs-task-manager || true
-            docker rm nodejs-task-manager || true
+            docker stop ${IMAGE_NAME} || true
+            docker rm ${IMAGE_NAME} || true
 
             docker run -d \
-              --name nodejs-task-manager \
+              --name ${IMAGE_NAME} \
               -p 3000:3000 \
-              ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:${IMAGE_TAG}
+              ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG}
