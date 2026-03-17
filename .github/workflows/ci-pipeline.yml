@@ -68,6 +68,7 @@ jobs:
 # -------------------------------
 # Dependency and filesystem scan
 # --------------------------------
+  
   vulnerability_scan:
     runs-on: ubuntu-latest
     needs: code_scan
@@ -75,20 +76,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Trivy (official script)
+      - name: Install Trivy
         run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | \
-          sudo sh -s -- -b /usr/local/bin v0.56.1
+          sudo apt-get update
+          sudo apt-get install -y wget tar
 
-      - name: Verify Trivy Installation
-        run: trivy --version
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.56.1/trivy_0.56.1_Linux-64bit.tar.gz
+          tar -xzf trivy_0.56.1_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
 
-      - name: Run Trivy FS Scan
+      - name: Run Trivy Scan
         run: |
-          trivy fs \
-          --severity HIGH,CRITICAL \
-          --exit-code 1 \
-          .
+          trivy fs --severity HIGH,CRITICAL --exit-code 1 .
+
 
 # -------------------------------
 # Dockerfile Lint
