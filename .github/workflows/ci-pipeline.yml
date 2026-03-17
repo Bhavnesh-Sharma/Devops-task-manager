@@ -65,7 +65,6 @@ jobs:
 
 
 
-
 # -------------------------------
 # Dependency and filesystem scan
 # --------------------------------
@@ -76,13 +75,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Trivy (official script)
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | \
+          sudo sh -s -- -b /usr/local/bin v0.56.1
+
+      - name: Verify Trivy Installation
+        run: trivy --version
+
       - name: Run Trivy FS Scan
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: fs
-          scan-ref: .
-          severity: HIGH,CRITICAL
-          exit-code: 1
+        run: |
+          trivy fs \
+          --severity HIGH,CRITICAL \
+          --exit-code 1 \
+          .
 
 # -------------------------------
 # Dockerfile Lint
