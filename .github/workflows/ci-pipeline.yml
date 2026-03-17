@@ -64,7 +64,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-
 # -------------------------------
 # Dependency and filesystem scan
 # --------------------------------
@@ -131,7 +130,7 @@ jobs:
 
   image_scan:
     runs-on: ubuntu-latest
-    needs: code_scan
+    needs: build_image  
 
     steps:
       - uses: actions/checkout@v4
