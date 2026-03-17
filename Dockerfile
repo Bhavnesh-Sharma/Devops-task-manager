@@ -10,7 +10,7 @@ COPY . .
 
 
 # Stage 2: Distroless runtime
-FROM gcr.io/distroless/nodejs24-debian12
+FROM gcr.io/distroless/nodejs24-debian12:latest
 
 WORKDIR /app
 
