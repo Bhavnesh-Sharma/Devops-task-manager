@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   mongo:
-    image: mongo:8.0
+    image: mongo:8.0.0
     container_name: task-manager-db
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
       retries: 5
 
   app:
-    image: ${DOCKER_USERNAME}/nodejs-task-manager:latest
+    image: ${DOCKER_USERNAME}/nodejs-task-manager:${IMAGE_TAG}  
     container_name: task-manager-app
     restart: unless-stopped
     ports:
@@ -35,6 +35,18 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+
+    # Healthcheck for better orchestration (important for K8s later)
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+   # Security best practice
+    read_only: true
+    tmpfs:
+      - /tmp
 
 volumes:
   mongodb-data:
