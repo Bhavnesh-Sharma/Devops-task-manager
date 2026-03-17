@@ -54,6 +54,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}  
 
       - name: Check quality gate
         uses: SonarSource/sonarqube-quality-gate-action@v1
