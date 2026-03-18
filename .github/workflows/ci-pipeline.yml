@@ -212,12 +212,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          envs: IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager,IMAGE_TAG=v${{ github.run_number }}
           script: |
             mkdir -p /home/ubuntu/nodejs-task-manager
             cd /home/ubuntu/nodejs-task-manager
 
-            # ✅ Debug: make sure variables exist
+          # ✅ Define variables directly
+            IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager
+            IMAGE_TAG=v${{ github.run_number }}
+
             echo "IMAGE_NAME=$IMAGE_NAME"
             echo "IMAGE_TAG=$IMAGE_TAG"
 
