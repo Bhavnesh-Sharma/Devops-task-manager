@@ -215,7 +215,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         envs: |
           IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager
-          IMAGE_TAG=${{ github.run_number }}
+          IMAGE_TAG=v${{ github.run_number }}
         script: |
           mkdir -p /home/ubuntu/nodejs-task-manager
           cd /home/ubuntu/nodejs-task-manager
