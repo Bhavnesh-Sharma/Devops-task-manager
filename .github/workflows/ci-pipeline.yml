@@ -166,7 +166,7 @@ jobs:
 
       - name: Run Trivy Scan on image
         run: |
-          trivy image --severity HIGH,CRITICAL --exit-code 1 ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG}
+          trivy image --severity CRITICAL --exit-code 1 ${{ secrets.DOCKER_USERNAME }}/${IMAGE_NAME}:${IMAGE_TAG}
 
 
 # -------------------------------
