@@ -217,17 +217,9 @@ jobs:
           envs: IMAGE_NAME,IMAGE_TAG
 
           script: |
-            echo "Deploying $IMAGE_NAME:$IMAGE_TAG"
-
-            FULL_IMAGE=${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME:$IMAGE_TAG
-
-            echo "Pulling $FULL_IMAGE"
-            docker pull $FULL_IMAGE
-
-            docker stop $IMAGE_NAME || true
-            docker rm $IMAGE_NAME || true
-
-            docker run -d \
-              --name $IMAGE_NAME \
-              -p 3000:3000 \
-              $FULL_IMAGE
+              mkdir -p /home/ubuntu/nodejs-task-manager
+              cd /home/ubuntu/nodejs-task-manager
+              echo "Pull latest images"
+              docker compose pull
+              echo "Restart containers"
+              docker compose up -d --remove-orphans
