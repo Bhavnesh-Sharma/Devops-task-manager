@@ -217,6 +217,7 @@ jobs:
             mkdir -p /home/ubuntu/nodejs-task-manager
             cd /home/ubuntu/nodejs-task-manager
 
+            # ✅ Debug: make sure variables exist
             echo "IMAGE_NAME=$IMAGE_NAME"
             echo "IMAGE_TAG=$IMAGE_TAG"
 
