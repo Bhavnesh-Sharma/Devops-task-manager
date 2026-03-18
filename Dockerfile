@@ -10,7 +10,7 @@ COPY . .
 
 
 # Stage 2: Distroless runtime
-FROM gcr.io/distroless/nodejs24-debian13:nonroot
+FROM gcr.io/distroless/nodejs24-debian14:nonroot
 
 WORKDIR /app
 
