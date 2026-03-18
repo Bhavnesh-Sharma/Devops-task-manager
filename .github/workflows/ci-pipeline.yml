@@ -216,7 +216,7 @@ jobs:
             mkdir -p /home/ubuntu/nodejs-task-manager
             cd /home/ubuntu/nodejs-task-manager
 
-          # ✅ Define variables directly
+            # ✅ Define variables directly
             IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager
             IMAGE_TAG=v${{ github.run_number }}
 
