@@ -203,29 +203,30 @@ jobs:
 # Deploy Application
 # -------------------------------
 
-deploy:
-  runs-on: ubuntu-latest
-  needs: push_image
-  steps:
-    - name: Deploy to EC2 via SSH
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          mkdir -p /home/ubuntu/nodejs-task-manager
-          cd /home/ubuntu/nodejs-task-manager
+  deploy:
 
-          # ✅ Define variables directly
-          export IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager
-          export IMAGE_TAG=v${{ github.run_number }}
+    runs-on: ubuntu-latest
+    needs: push_image
+    steps:
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            mkdir -p /home/ubuntu/nodejs-task-manager
+            cd /home/ubuntu/nodejs-task-manager
 
-          echo "IMAGE_NAME=$IMAGE_NAME"
-          echo "IMAGE_TAG=$IMAGE_TAG"
+            # ✅ Define variables directly
+            export IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager
+            export IMAGE_TAG=v${{ github.run_number }}
 
-          echo "Pull latest images"
-          docker compose pull
+            echo "IMAGE_NAME=$IMAGE_NAME"
+            echo "IMAGE_TAG=$IMAGE_TAG"
 
-          echo "Restart containers"
-          docker compose up -d --remove-orphans 
+            echo "Pull latest images"
+            docker compose pull
+
+            echo "Restart containers"
+            docker compose up -d --remove-orphans 
