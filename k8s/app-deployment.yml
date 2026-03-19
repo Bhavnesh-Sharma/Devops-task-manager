@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: task-manager
-          image: bhuvi17/nodejs-task-manager:v89
+          image: bhuvi17/nodejs-task-manager:v90
           ports:
             - containerPort: 3000      
           env:
