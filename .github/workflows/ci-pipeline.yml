@@ -5,6 +5,9 @@ on:
     branches:
       - dev
 
+permissions:
+  contents: write
+
 env:
   IMAGE_NAME: nodejs-task-manager
   IMAGE_TAG: v${{ github.run_number }}
