@@ -41,4 +41,3 @@ spec:
       nodePort : 30007 
 
   type: NodePort        
-

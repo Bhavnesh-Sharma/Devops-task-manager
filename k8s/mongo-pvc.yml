@@ -1,28 +1,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  namespace: task-manager
   name: mongo-pv
 spec:
   capacity:
-     storage: 5Gi
+    storage: 5Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-     path: /data/mongo    
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongo-pvc
-  namespace: task-manager
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi    
+    path: /data/mongo
 

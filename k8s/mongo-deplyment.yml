@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mongo
-  namespace: task-manager  
+  namespace: task-manager
 spec:
+  serviceName: mongo-service
   replicas: 1
   selector:
     matchLabels:
@@ -17,14 +18,13 @@ spec:
         - name: mongo
           image: mongo:8.0
           ports:
-            - containerPort: 27017   
+            - containerPort: 27017
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom: 
+              valueFrom:
                 secretKeyRef:
                   name: mongo-secret
-                  key: MONGO_INITDB_ROOT_USERNAME    
-
+                  key: MONGO_INITDB_ROOT_USERNAME
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -33,10 +33,16 @@ spec:
           volumeMounts:
             - name: mongo-storage
               mountPath: /data/db
-      volumes:
-        - name: mongo-storage
-          persistentVolumeClaim:
-           claimName: mongo-pvc      
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
 
 ---
 apiVersion: v1
@@ -45,11 +51,10 @@ metadata:
   name: mongo-service
   namespace: task-manager
 spec:
+  clusterIP: None
   selector:
     app: mongo
   ports:
-    - protocol: TCP
-      port: 27017
+    - port: 27017
       targetPort: 27017
-  type: ClusterIP
 
