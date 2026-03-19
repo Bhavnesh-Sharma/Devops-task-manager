@@ -213,16 +213,16 @@ jobs:
         uses: actions/checkout@v4
 
       # -------------------------------
-      # Update image tag in deployment.yaml
+      # Update image tag in app-deployment.yml
       # -------------------------------
       - name: Update Kubernetes manifest
         run: |
-          echo "Updating image tag in app-deployment.yaml..."
+          echo "Updating image tag in app-deployment.yml..."
 
-          sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:v${{ github.run_number }}|" k8s/app-deployment.yaml
+          sed -i "s|image: .*|image: ${{ secrets.DOCKER_USERNAME }}/nodejs-task-manager:v${{ github.run_number }}|" k8s/app-deployment.yml
 
           echo "Updated file:"
-          cat k8s/app-deployment.yaml
+          cat k8s/app-deployment.yml
 
       # -------------------------------
       # Commit and push changes
@@ -232,7 +232,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          git add k8s/app-deployment.yaml
+          git add k8s/app-deployment.yml
 
           git commit -m "Update image to v${{ github.run_number }}" || echo "No changes to commit"
 
